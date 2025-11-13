@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@theme {
+	--font-sans: "Saira", sans-serif;
+	--font-mono: "Noto Sans Mono", monospace;
+}
+
+@layer utilities {
+	.hide-scrollbar {
+		@apply [::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none];
+	}
+}
