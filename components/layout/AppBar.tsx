@@ -3,12 +3,13 @@
 import { cn } from "@/lib";
 import { useRouter } from "next/navigation";
 
+import CONFIG from "@/config";
+
 import Button from "@/components/UI/Button";
 import { ChevronLeft } from "@/components/UI/Icon";
 import MobileContainer from "@/components/layout/MobileContainer";
 
-export const APP_BAR_MAX_HEIGHT = 57 as const;
-
+const APP_BAR_MAX_HEIGHT = CONFIG.APP_BAR_MAX_HEIGHT;
 interface AppBarProps extends Omit<React.ComponentProps<"div">, "title"> {
 	title?: string | React.ReactNode;
 	titleClassName?: string;
@@ -45,8 +46,7 @@ export default function AppBar({
 		<MobileContainer
 			className={cn(
 				"border-b border-zinc-300 bg-white",
-				`max-h-[${APP_BAR_MAX_HEIGHT}px]`,
-				className
+				`max-h-[${APP_BAR_MAX_HEIGHT}px]`
 			)}
 			{...props}
 		>

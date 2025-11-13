@@ -1,4 +1,5 @@
 "use client";
+
 import ErrorBase from "@/components/layout/ErrorBase";
 
 export default function Error() {

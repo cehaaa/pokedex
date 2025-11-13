@@ -1,10 +1,7 @@
-import { Suspense } from "react";
+import { connection } from "next/server";
 import SearchPageContent from "@/components/SearchPage/SearchPageContent";
 
 export default async function Page() {
-	return (
-		<Suspense fallback={null}>
-			<SearchPageContent />
-		</Suspense>
-	);
+	await connection();
+	return <SearchPageContent />;
 }
