@@ -37,7 +37,7 @@ const constructBackRoute = (ref: string, name?: string) => {
 	const backRoute = getBackRoute(ref);
 	if (backRoute === "/search" && name) {
 		const searchParams = new URLSearchParams();
-		searchParams.set("q", name);
+		searchParams.set("q", name.split("-").join(" "));
 		return `${backRoute}?${searchParams.toString()}`;
 	}
 	return backRoute;

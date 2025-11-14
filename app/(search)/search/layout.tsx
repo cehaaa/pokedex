@@ -13,9 +13,7 @@ export default function Layout({ children }: LayoutProps) {
 				<SearchAppBar />
 			</StickyHeader>
 			<main>
-				<MobileContainer className='bg-red-500' withMinHeight>
-					{children}
-				</MobileContainer>
+				<MobileContainer withMinHeight>{children}</MobileContainer>
 			</main>
 		</>
 	);
