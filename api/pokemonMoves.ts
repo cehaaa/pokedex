@@ -1,12 +1,12 @@
 import kebabCase from "lodash/kebabCase";
-import { http } from "@/lib";
+import { http } from "@/lib/http";
 
 export interface GetPokemonMovesByNameProps {
-	name: string;
+  name: string;
 }
 export async function getPokemonMovesByName({
-	name,
+  name,
 }: GetPokemonMovesByNameProps) {
-	const { data } = await http.get(`/move/${kebabCase(name)}`);
-	return data;
+  const { data } = await http.get(`/move/${kebabCase(name)}`);
+  return data;
 }

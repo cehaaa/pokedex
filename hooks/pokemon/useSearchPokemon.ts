@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 
+import { POKEMON } from "@/constants/queryKeys";
+
 import type { Pokemon } from "@/types/Pokemon";
 
 import kebabCase from "lodash/kebabCase";
@@ -20,9 +22,13 @@ const ERROR_MESSAGES = {
   DEFAULT_ERROR: "Oops! Something went wrong",
 };
 
-export function useSearchPokemon({ name }: UseSearchPokemonProps) {
+export function getPokemonQueryKey(name: string) {
+  return [POKEMON, name];
+}
+
+export function useSearchPokemon() {
   const firstTimeFetchRef = useRef(true);
-  const isNameEmpty = name.trim().length === 0;
+  // const isNameEmpty = name.trim().length === 0;
 
   const [manualError, setManualError] = useState({
     isError: false,
@@ -30,13 +36,12 @@ export function useSearchPokemon({ name }: UseSearchPokemonProps) {
   });
 
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["pokemon", name],
     enabled: false,
     retry: false,
-    queryFn: async () => {
+    queryFn: async ({ queryKey: [, name] }) => {
       try {
         const pokemon = await getPokemonDetailsByName<Pokemon>({
-          name: kebabCase(name),
+          name: kebabCase(name || ""),
         });
         if (!pokemon) {
           throw new Error(ERROR_MESSAGES.NOT_FOUND);
@@ -65,7 +70,7 @@ export function useSearchPokemon({ name }: UseSearchPokemonProps) {
 
     handleResetError();
 
-    if (isNameEmpty) {
+    if (!name) {
       setManualError({
         isError: true,
         message: ERROR_MESSAGES.EMPTY_SEARCH_TERM,
