@@ -1,13 +1,21 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 
+import { POKEMON } from "@/constants/queryKeys";
 import { DEFAULT_LIMIT, DEFAULT_OFFSET } from "@/constants/queries";
 
 import type { PokemonListWithDetails } from "@/types/Pokemon";
 
 import { getPokemonList, type GetPokemonListProps } from "@/api/pokemon";
-import { getPokemonListQueryKey } from "@/utils";
 
 type UseGetInfinitePokemonProps = GetPokemonListProps;
+type GetPokemonListQueryKeyProps = GetPokemonListProps;
+
+export function getPokemonListQueryKey({
+  limit = DEFAULT_LIMIT,
+  offset = DEFAULT_OFFSET,
+}: GetPokemonListQueryKeyProps) {
+  return [POKEMON, limit, offset];
+}
 
 export function useGetInfinitePokemon({
   limit = DEFAULT_LIMIT,

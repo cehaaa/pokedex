@@ -2,7 +2,7 @@
 
 import { useRef, useCallback } from "react";
 
-import { useGetInfinitePokemon } from "@/hooks/pokemon";
+import { useGetInfinitePokemon } from "@/hooks/pokemon/useGetInfinitePokemon";
 
 import PokemonGrid from "@/components/layout/PokemonGrid";
 import PokemonCard from "@/components/home/PokemonCard";

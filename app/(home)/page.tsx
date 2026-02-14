@@ -5,7 +5,8 @@ import { DEFAULT_OFFSET, DEFAULT_LIMIT } from "@/constants/queries";
 import type { PokemonListWithDetails } from "@/types/Pokemon";
 
 import { getPokemonList } from "@/api/pokemon";
-import { createQueryClient, getPokemonListQueryKey } from "@/utils";
+import { createQueryClient } from "@/utils/createQueryClient";
+import { getPokemonListQueryKey } from "@/hooks/pokemon/useGetInfinitePokemon";
 
 import InfinitePokemon from "@/components/home/InfinitePokemon";
 

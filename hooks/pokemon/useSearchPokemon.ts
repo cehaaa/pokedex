@@ -16,7 +16,7 @@ interface UseSearchPokemonProps {
 
 const ERROR_MESSAGES = {
   EMPTY_SEARCH_TERM: "Please enter a valid search term",
-  NOT_FOUND: "No results found",
+  NOT_FOUND: "No pokemon found",
   DEFAULT_ERROR: "Oops! Something went wrong",
 };
 

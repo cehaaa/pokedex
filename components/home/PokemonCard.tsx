@@ -1,7 +1,7 @@
 import type { Pokemon } from "@/types/Pokemon";
 
 import { Tab } from "@/app/[name]/constants";
-import { formatPokemonOder } from "@/utils";
+import { formatPokemonOder } from "@/utils/formatPokemonOrder";
 
 import Image from "next/image";
 import Link from "next/link";

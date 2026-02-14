@@ -9,8 +9,9 @@ import type {
   PokemonListWithDetails,
 } from "@/types/Pokemon";
 
-import { http, get } from "@/lib";
-import { normalizePokemonResponse } from "@/utils";
+import { get } from "@/lib/get";
+import { http } from "@/lib/http";
+import { normalizePokemonResponse } from "@/utils/normalizePokemonResponse";
 
 export interface GetPokemonListProps {
   limit?: number;
@@ -43,11 +44,16 @@ export async function getPokemonList({
 
   const pokemonNames = results.map(({ name }) => name);
 
-  const pokemonListWithDetails = await Promise.all(
-    pokemonNames.map((name) => getPokemonDetailsByName<Pokemon>({ name }))
-  );
+  const pokemonListWithDetails = await getPokemonListWithDetails(pokemonNames);
 
   return { ...rest, results: pokemonListWithDetails };
+}
+
+async function getPokemonListWithDetails(pokemonNames: string[]) {
+  const response = await Promise.all(
+    pokemonNames.map((name) => getPokemonDetailsByName<Pokemon>({ name }))
+  );
+  return response;
 }
 
 export async function getPokemonDetailsByName<
