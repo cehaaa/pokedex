@@ -1,7 +1,7 @@
 import type { PokemonWithSpecies } from "@/types/Pokemon";
 import { formatPokemonMetrics } from "@/utils/formatPokemonMetrics";
 
-import InfoCard from "@/components/UI/InfoCard";
+import InfoCard from "@/components/ui/InfoCard";
 import PokemonStats from "@/components/PokemonDetailPage/PokemonStats";
 
 interface PokemonAboutProps {

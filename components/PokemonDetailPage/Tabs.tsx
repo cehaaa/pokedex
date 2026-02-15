@@ -5,7 +5,7 @@ import { cn } from "@/lib/cn";
 import { TABS, Tab } from "@/app/[name]/constants";
 
 import Link from "next/link";
-import Button from "@/components/UI/Button";
+import Button from "@/components/ui/Button";
 
 const constructHref = (
   pathname: string,

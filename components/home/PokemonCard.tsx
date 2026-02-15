@@ -51,7 +51,7 @@ export default function PokemonCard({ pokemon, reference }: PokemonCardProps) {
             width={300}
             height={300}
             loading="lazy"
-            className="w-[100px] h-[100px] object-contain aspect-square mx-auto"
+            className="size-[100px] object-contain aspect-square mx-auto"
           />
         </Link>
       </div>

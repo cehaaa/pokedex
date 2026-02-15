@@ -3,8 +3,8 @@
 import { cn } from "@/lib/cn";
 import { useRouter } from "next/navigation";
 
-import Button from "@/components/UI/Button";
-import { ChevronLeft } from "@/components/UI/Icon";
+import Button from "@/components/ui/Button";
+import { ChevronLeft } from "@/components/ui/Icon";
 import MobileContainer from "@/components/layout/MobileContainer";
 
 interface AppBarProps extends Omit<React.ComponentProps<"div">, "title"> {

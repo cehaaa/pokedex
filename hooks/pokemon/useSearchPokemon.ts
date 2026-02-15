@@ -1,17 +1,14 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { POKEMON } from "@/constants/queryKeys";
 
-import type { Pokemon } from "@/types/Pokemon";
-
-import kebabCase from "lodash/kebabCase";
-import { isAxiosError } from "axios";
-
+import { useDebounce } from "../useDebounce";
 import { getPokemonDetailsByName } from "@/api/pokemon";
-
+import { get } from "@/lib/get";
+import { isAxiosError } from "@/lib/http";
 interface UseSearchPokemonProps {
   name: string;
 }
@@ -26,72 +23,44 @@ export function getPokemonQueryKey(name: string) {
   return [POKEMON, name];
 }
 
-export function useSearchPokemon() {
-  const firstTimeFetchRef = useRef(true);
-  // const isNameEmpty = name.trim().length === 0;
+export function useSearchPokemon({ name }: UseSearchPokemonProps) {
+  const debouncedName = useDebounce({ value: name, delay: 800 });
 
   const [manualError, setManualError] = useState({
     isError: false,
     message: ERROR_MESSAGES.DEFAULT_ERROR,
   });
 
-  const { data, isLoading, refetch } = useQuery({
-    enabled: false,
-    retry: false,
-    queryFn: async ({ queryKey: [, name] }) => {
+  const resetManualError = () => {
+    setManualError({
+      isError: false,
+      message: ERROR_MESSAGES.DEFAULT_ERROR,
+    });
+  };
+
+  const { data, isLoading, error, ...rest } = useQuery({
+    queryKey: getPokemonQueryKey(debouncedName),
+    queryFn: async () => {
+      resetManualError();
+
       try {
-        const pokemon = await getPokemonDetailsByName<Pokemon>({
-          name: kebabCase(name || ""),
-        });
-        if (!pokemon) {
-          throw new Error(ERROR_MESSAGES.NOT_FOUND);
-        }
-        return pokemon;
+        const response = await getPokemonDetailsByName({ name: debouncedName });
+        return response;
       } catch (error) {
-        if (isAxiosError(error)) {
-          if (error.response?.status === 404) {
-            setManualError({
-              isError: true,
-              message: ERROR_MESSAGES.NOT_FOUND,
-            });
-          }
+        const status = get(error, "response.status");
+        if (isAxiosError(error) && status === 404) {
+          setManualError({
+            isError: true,
+            message: ERROR_MESSAGES.NOT_FOUND,
+          });
+          return null;
         }
         throw error;
       }
     },
+    enabled: !!debouncedName,
+    retry: false,
   });
 
-  const handleResetError = useCallback(() => {
-    setManualError({ isError: false, message: ERROR_MESSAGES.DEFAULT_ERROR });
-  }, []);
-
-  const handleOnSearch = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    handleResetError();
-
-    if (!name) {
-      setManualError({
-        isError: true,
-        message: ERROR_MESSAGES.EMPTY_SEARCH_TERM,
-      });
-      return;
-    }
-
-    try {
-      await refetch();
-    } catch {
-      setManualError({
-        isError: true,
-        message: ERROR_MESSAGES.NOT_FOUND,
-      });
-    }
-  };
-
-  useEffect(() => {
-    if (!isNameEmpty && firstTimeFetchRef.current) refetch();
-    firstTimeFetchRef.current = false;
-  }, [isNameEmpty, refetch]);
-
-  return { data, isLoading, error: manualError, handleOnSearch };
+  return { data, isLoading, error: manualError, ...rest };
 }

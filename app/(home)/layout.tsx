@@ -2,8 +2,8 @@ import Link from "next/link";
 import AppBar from "@/components/layout/AppBar";
 import StickyHeader from "@/components/layout/StickyHeader";
 import MobileContainer from "@/components/layout/MobileContainer";
-import Button from "@/components/UI/Button";
-import { MagnifyingGlass } from "@/components/UI/Icon";
+import Button from "@/components/ui/Button";
+import { MagnifyingGlass } from "@/components/ui/Icon";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
