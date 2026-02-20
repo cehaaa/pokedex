@@ -21,6 +21,7 @@ export function normalizePokemonResponse<
   const types = get(pokemon, "types", []);
   const moves = get(pokemon, "moves", []);
   const stats = get(pokemon, "stats", []);
+  const abilities = get(pokemon, "abilities", []);
 
   const descriptions = get(species, "flavorTextEntries", []);
   const description = find(
@@ -34,17 +35,21 @@ export function normalizePokemonResponse<
     (genus) => get(genus, "language.name", "") === "en"
   );
 
-  const baseResult: Pokemon = {
+  const baseResult = {
     ...pokemon,
     slug: kebabCase(get(pokemon, "name", "")),
     name: startCase(get(pokemon, "name", "")),
-    image: get(pokemon, "sprites.frontDefault", ""),
+    image: {
+      default: get(pokemon, "sprites.frontDefault", ""),
+      artwork: get(pokemon, "sprites.other.officialArtwork.frontDefault", ""),
+    },
     types: map(types, (type) => get(type, "type.name")),
     moves: map(moves, (move) => startCase(get(move, "move.name", ""))),
     stats: map(stats, (stat) => ({
       name: get(stat, "stat.name", ""),
       baseStat: get(stat, "baseStat"),
     })),
+    abilities: map(abilities, (ability) => get(ability, "ability.name")),
   };
 
   const speciesResult: PokemonSpecies = species && {

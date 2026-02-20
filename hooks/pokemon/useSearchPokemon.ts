@@ -1,27 +1,21 @@
-"use client";
-
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-
-import { POKEMON } from "@/constants/queryKeys";
 
 import { useDebounce } from "../useDebounce";
 import { getPokemonDetailsByName } from "@/api/pokemon";
 import { get } from "@/lib/get";
 import { isAxiosError } from "@/lib/http";
+import { toSlug } from "@/utils/toSlug";
+import { getPokemonQueryKey } from "@/utils/getPokemonQueryKey";
+
 interface UseSearchPokemonProps {
   name: string;
 }
 
 const ERROR_MESSAGES = {
-  EMPTY_SEARCH_TERM: "Please enter a valid search term",
   NOT_FOUND: "No pokemon found",
   DEFAULT_ERROR: "Oops! Something went wrong",
 };
-
-export function getPokemonQueryKey(name: string) {
-  return [POKEMON, name];
-}
 
 export function useSearchPokemon({ name }: UseSearchPokemonProps) {
   const debouncedName = useDebounce({ value: name, delay: 800 });
@@ -44,7 +38,9 @@ export function useSearchPokemon({ name }: UseSearchPokemonProps) {
       resetManualError();
 
       try {
-        const response = await getPokemonDetailsByName({ name: debouncedName });
+        const response = await getPokemonDetailsByName({
+          name: toSlug(debouncedName),
+        });
         return response;
       } catch (error) {
         const status = get(error, "response.status");
@@ -55,6 +51,10 @@ export function useSearchPokemon({ name }: UseSearchPokemonProps) {
           });
           return null;
         }
+        setManualError({
+          isError: true,
+          message: ERROR_MESSAGES.DEFAULT_ERROR,
+        });
         throw error;
       }
     },

@@ -59,9 +59,11 @@ async function getPokemonListWithDetails(pokemonNames: string[]) {
 export async function getPokemonDetailsByName<
   T extends Pokemon | PokemonWithSpecies
 >({ name, withSpecies = false }: GetPokemonDetailsByNameProps): Promise<T> {
-  const { data: pokemon } = await http.get(`/pokemon/${name}`);
+  const { data: pokemon } = await http.get<Pokemon>(`/pokemon/${name}`);
 
   const species = withSpecies ? await getPokemonSpeciesByName(name) : null;
+  console.log("withSpecies", withSpecies);
+  console.log(species);
 
   return normalizePokemonResponse<T>({ pokemon, species });
 }

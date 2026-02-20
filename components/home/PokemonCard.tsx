@@ -46,7 +46,7 @@ export default function PokemonCard({ pokemon, reference }: PokemonCardProps) {
       <div className="bg-zinc-100 pt-9">
         <Link href={href}>
           <Image
-            src={pokemon.image}
+            src={pokemon.image.artwork}
             alt={pokemon.name}
             width={300}
             height={300}

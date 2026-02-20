@@ -6,10 +6,11 @@ export interface Pokemon {
   order: number;
   height: number;
   weight: number;
-  image: string;
+  image: { default: string; artwork: string };
   types: string[];
   stats: { name: string; baseStat: number }[];
   moves: string[];
+  abilities: string[];
 }
 
 export interface PokemonSpecies {
