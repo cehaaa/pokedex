@@ -3,7 +3,6 @@ interface PokemonAbilitiesProps {
 }
 
 export default function PokemonAbilities({ abilities }: PokemonAbilitiesProps) {
-  console.log(abilities);
   return (
     <div className="grid grid-cols-2 gap-3">
       {abilities.map((ability) => (

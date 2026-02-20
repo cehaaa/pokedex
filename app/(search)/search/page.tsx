@@ -1,5 +1,10 @@
+import { Suspense } from "react";
 import SearchPageContent from "@/components/SearchPage/SearchPageContent";
 
 export default async function Page() {
-  return <SearchPageContent />;
+  return (
+    <Suspense>
+      <SearchPageContent />
+    </Suspense>
+  );
 }

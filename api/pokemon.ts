@@ -62,8 +62,6 @@ export async function getPokemonDetailsByName<
   const { data: pokemon } = await http.get<Pokemon>(`/pokemon/${name}`);
 
   const species = withSpecies ? await getPokemonSpeciesByName(name) : null;
-  console.log("withSpecies", withSpecies);
-  console.log(species);
 
   return normalizePokemonResponse<T>({ pokemon, species });
 }
