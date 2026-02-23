@@ -1,9 +1,9 @@
-import type { PokemonWithSpecies } from "@/types/Pokemon";
+import type { PokemonDetails } from "@/types/Pokemon";
 import { getPokemonStatName } from "@/utils/getPokemonStatName";
 import ProgressBar from "@/components/ui/ProgressBar";
 
 interface PokemonStatsProps {
-  stats: PokemonWithSpecies["stats"];
+  stats: PokemonDetails["stats"];
 }
 
 export default function PokemonStats({ stats }: PokemonStatsProps) {

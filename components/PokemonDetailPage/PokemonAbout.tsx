@@ -1,11 +1,11 @@
-import type { PokemonWithSpecies } from "@/types/Pokemon";
+import type { PokemonDetails } from "@/types/Pokemon";
 import { formatPokemonMetrics } from "@/utils/formatPokemonMetrics";
 
 import InfoCard from "@/components/ui/InfoCard";
 import PokemonStats from "@/components/PokemonDetailPage/PokemonStats";
 
 interface PokemonAboutProps {
-  stats: PokemonWithSpecies["stats"];
+  stats: PokemonDetails["stats"];
   height: number;
   weight: number;
   description: string;

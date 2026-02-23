@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 
-import type { PokemonWithSpecies } from "@/types/Pokemon";
+import type { PokemonDetails } from "@/types/Pokemon";
 import { Tab } from "@/app/[name]/constants";
 
 import PokemonAbout from "./PokemonAbout";
@@ -10,38 +10,40 @@ import PokemonAbilities from "./PokemonAbilities";
 import PokemonMoves from "./PokemonMoves";
 
 interface TabContentProps {
-  pokemon: PokemonWithSpecies;
+  pokemonDetails: PokemonDetails;
 }
 
 type ContentMap = Record<
   Tab,
   {
     Component: React.ComponentType<any>;
-    getComponentProps?: (pokemon: PokemonWithSpecies) => any;
+    getComponentProps?: (pokemonDetails: PokemonDetails) => any;
   }
 >;
 
 const CONTENT_MAP: ContentMap = {
   [Tab.ABOUT]: {
     Component: PokemonAbout,
-    getComponentProps: (pokemon: PokemonWithSpecies) => ({
-      description: pokemon.description,
-      stats: pokemon.stats,
-      height: pokemon.height,
-      weight: pokemon.weight,
-      genus: pokemon.genus,
-    }),
+    getComponentProps: (pokemonDetails: PokemonDetails) => {
+      return {
+        description: pokemonDetails.description,
+        stats: pokemonDetails.stats,
+        height: pokemonDetails.height,
+        weight: pokemonDetails.weight,
+        genus: pokemonDetails.genus,
+      };
+    },
   },
   [Tab.ABILITIES]: {
     Component: PokemonAbilities,
-    getComponentProps: (pokemon: PokemonWithSpecies) => ({
-      abilities: pokemon.abilities,
+    getComponentProps: (pokemonDetails: PokemonDetails) => ({
+      abilities: pokemonDetails.abilities,
     }),
   },
   [Tab.MOVES]: {
     Component: PokemonMoves,
-    getComponentProps: (pokemon: PokemonWithSpecies) => ({
-      moves: pokemon.moves,
+    getComponentProps: (pokemonDetails: PokemonDetails) => ({
+      moves: pokemonDetails.moves,
     }),
   },
   [Tab.EVOLUTIONS]: {
@@ -49,12 +51,12 @@ const CONTENT_MAP: ContentMap = {
   },
 };
 
-export default function TabContent({ pokemon }: TabContentProps) {
+export default function TabContent({ pokemonDetails }: TabContentProps) {
   const searchParams = useSearchParams();
   const activeTab = searchParams.get("tab") as Tab;
 
   const { Component, getComponentProps } = CONTENT_MAP[activeTab || Tab.ABOUT];
-  const componentProps = getComponentProps?.(pokemon) || {};
+  const componentProps = getComponentProps?.(pokemonDetails) || {};
 
   return (
     <>

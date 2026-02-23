@@ -2,6 +2,7 @@ import type { Pokemon } from "@/types/Pokemon";
 
 import { Tab } from "@/app/[name]/constants";
 import { formatPokemonOder } from "@/utils/formatPokemonOrder";
+import { getPokemonImage } from "@/utils/getPokemonImage";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -46,11 +47,11 @@ export default function PokemonCard({ pokemon, reference }: PokemonCardProps) {
       <div className="bg-zinc-100 pt-9">
         <Link href={href}>
           <Image
-            src={pokemon.image.artwork}
+            src={getPokemonImage({ image: pokemon.sprites })}
             alt={pokemon.name}
             width={300}
             height={300}
-            loading="lazy"
+            loading="eager"
             className="size-[100px] object-contain aspect-square mx-auto"
           />
         </Link>

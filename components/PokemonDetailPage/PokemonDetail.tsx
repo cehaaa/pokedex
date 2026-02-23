@@ -1,15 +1,16 @@
 "use client";
 
 import { notFound } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
 
-import type { PokemonWithSpecies } from "@/types/Pokemon";
-
-import { getPokemonDetailsByName } from "@/api/pokemon";
+import type { PokemonDetails } from "@/types/Pokemon";
 
 import { getBackRoute } from "@/utils/getBackRoute";
 import { formatPokemonOder } from "@/utils/formatPokemonOrder";
-import { getPokemonQueryKey } from "@/utils/getPokemonQueryKey";
+import { getPokemonImage } from "@/utils/getPokemonImage";
+
+import { useGetPokemonDetails } from "@/hooks/pokemon/useGetPokemonDetails";
+import { useGetPokemonSpecies } from "@/hooks/pokemon/useGetPokemonSpecies";
+import { useGetPokemonAbilities } from "@/hooks/pokemon/useGetPokemonAbilities";
 
 import Image from "next/image";
 import { PlayIcon } from "@heroicons/react/16/solid";
@@ -39,14 +40,17 @@ const constructBackRoute = (ref: string, name?: string) => {
 export default function PokemonDetail({ name, backRef }: PokemonDetailProps) {
   const backRoute = constructBackRoute(backRef, name);
 
-  const { data: pokemon } = useQuery<PokemonWithSpecies>({
-    queryKey: getPokemonQueryKey(name),
-    queryFn: async () => {
-      return await getPokemonDetailsByName({ name, withSpecies: true });
-    },
-  });
+  const { data: pokemon } = useGetPokemonDetails({ name });
+  const { data: pokemonSpecies } = useGetPokemonSpecies({ name });
+  const { data: pokemonAbilities } = useGetPokemonAbilities({ name });
 
-  if (!pokemon) {
+  const pokemonDetails: PokemonDetails = {
+    ...pokemon,
+    ...pokemonSpecies,
+    ...pokemonAbilities,
+  };
+
+  if (!pokemonDetails) {
     notFound();
   }
 
@@ -69,7 +73,7 @@ export default function PokemonDetail({ name, backRef }: PokemonDetailProps) {
           <section className="relative mb-5 bg-zinc-200/50">
             <div className="relative aspect-square w-[200px] mx-auto z-20">
               <Image
-                src={pokemon.image.artwork}
+                src={getPokemonImage({ image: pokemon.sprites })}
                 alt={pokemon.name}
                 width={1080}
                 height={1080}
@@ -97,7 +101,7 @@ export default function PokemonDetail({ name, backRef }: PokemonDetailProps) {
           </section>
 
           <section>
-            <TabContent pokemon={pokemon} />
+            <TabContent pokemonDetails={pokemonDetails} />
           </section>
         </MobileContainer>
       </main>

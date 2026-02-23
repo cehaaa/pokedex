@@ -6,18 +6,23 @@ export interface Pokemon {
   order: number;
   height: number;
   weight: number;
-  image: { default: string; artwork: string };
   types: string[];
   stats: { name: string; baseStat: number }[];
   moves: string[];
   abilities: string[];
+  sprites: Record<string, any>;
 }
 
 export interface PokemonSpecies {
   color: string;
   description: string;
   genus: string;
-  habitat: string;
+}
+
+export interface PokemonAbility {
+  name: string;
+  description: string;
+  effect: string;
 }
 
 export interface PokemonListResponse {
@@ -25,6 +30,6 @@ export interface PokemonListResponse {
   name: string;
 }
 
-export type PokemonWithSpecies = Pokemon & PokemonSpecies;
+export type PokemonDetails = Pokemon & PokemonSpecies & PokemonAbility[];
 
 export type PokemonListWithDetails = PaginatedResponse<Pokemon>;

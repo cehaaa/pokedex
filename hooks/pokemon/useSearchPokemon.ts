@@ -37,10 +37,10 @@ export function useSearchPokemon({ name }: UseSearchPokemonProps) {
     queryFn: async () => {
       resetManualError();
 
+      const pokemonName = toSlug(debouncedName);
+
       try {
-        const response = await getPokemonDetailsByName({
-          name: toSlug(debouncedName),
-        });
+        const response = await getPokemonDetailsByName(pokemonName);
         return response;
       } catch (error) {
         const status = get(error, "response.status");

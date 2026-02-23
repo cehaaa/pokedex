@@ -1,12 +1,14 @@
+import InfoCard from "../ui/InfoCard";
+
 interface PokemonAbilitiesProps {
   abilities: string[];
 }
 
 export default function PokemonAbilities({ abilities }: PokemonAbilitiesProps) {
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="grid gap-3">
       {abilities.map((ability) => (
-        <div key={ability}>{ability}</div>
+        <InfoCard key={ability} title={ability} />
       ))}
     </div>
   );

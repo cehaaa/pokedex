@@ -1,11 +1,11 @@
 import padStart from "lodash/padStart";
 import kebabCase from "lodash/kebabCase";
-import type { PokemonWithSpecies } from "@/types/Pokemon";
+import type { PokemonDetails } from "@/types/Pokemon";
 import { cn } from "@/lib/cn";
 import Link from "next/link";
 
 interface PokemonMovesProps {
-  moves: PokemonWithSpecies["moves"];
+  moves: PokemonDetails["moves"];
 }
 
 function MoveItem({ number, move }: { number: number; move: string }) {
