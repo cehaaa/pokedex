@@ -2,7 +2,7 @@
 import { usePathname, useSearchParams } from "next/navigation";
 
 import { cn } from "@/lib/cn";
-import { TABS, Tab } from "@/app/[name]/constants";
+import { TABS, Tab } from "@/constants/pokemonDetailTabs";
 
 import Link from "next/link";
 import Button from "@/components/ui/Button";

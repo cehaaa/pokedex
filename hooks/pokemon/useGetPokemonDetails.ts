@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import type { PokemonDetails } from "@/types/Pokemon";
 import { POKEMON_DETAILS } from "@/constants/queryKeys";
-import { getPokemonDetailsByName } from "@/api/pokemon";
+import { getPokemonDetails } from "@/api/pokemon";
 
 interface UseGetPokemonDetailsProps {
   name: string;
@@ -12,13 +12,13 @@ export function getPokemonDetailsQueryKey(name: string) {
 }
 
 export function useGetPokemonDetails({ name }: UseGetPokemonDetailsProps) {
-  const { data, isLoading, error, ...rest } = useQuery({
+  const { data: pokemonDetails, ...rest } = useQuery({
     queryKey: getPokemonDetailsQueryKey(name),
     queryFn: async () => {
-      const response = await getPokemonDetailsByName(name);
+      const response = await getPokemonDetails(name);
       return response;
     },
   });
 
-  return { data, isLoading, error, ...rest };
+  return { data: pokemonDetails || ({} as PokemonDetails), ...rest };
 }

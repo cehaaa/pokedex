@@ -1,6 +1,6 @@
 import type { Pokemon } from "@/types/Pokemon";
 
-import { Tab } from "@/app/[name]/constants";
+import { Tab } from "@/constants/pokemonDetailTabs";
 import { formatPokemonOder } from "@/utils/formatPokemonOrder";
 import { getPokemonImage } from "@/utils/getPokemonImage";
 

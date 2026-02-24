@@ -1,4 +1,5 @@
 import { PaginatedResponse } from ".";
+import { Species } from "./Species";
 
 export interface Pokemon {
   name: string;
@@ -7,22 +8,15 @@ export interface Pokemon {
   height: number;
   weight: number;
   types: string[];
-  stats: { name: string; baseStat: number }[];
+  stats: PokemonStat[];
   moves: string[];
   abilities: string[];
   sprites: Record<string, any>;
 }
 
-export interface PokemonSpecies {
-  color: string;
-  description: string;
-  genus: string;
-}
-
-export interface PokemonAbility {
+export interface PokemonStat {
   name: string;
-  description: string;
-  effect: string;
+  baseStat: number;
 }
 
 export interface PokemonListResponse {
@@ -30,6 +24,6 @@ export interface PokemonListResponse {
   name: string;
 }
 
-export type PokemonDetails = Pokemon & PokemonSpecies & PokemonAbility[];
+export type PokemonDetails = Pokemon & Species;
 
 export type PokemonListWithDetails = PaginatedResponse<Pokemon>;

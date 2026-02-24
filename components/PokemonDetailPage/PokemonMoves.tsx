@@ -1,11 +1,11 @@
 import padStart from "lodash/padStart";
 import kebabCase from "lodash/kebabCase";
-import type { PokemonDetails } from "@/types/Pokemon";
 import { cn } from "@/lib/cn";
 import Link from "next/link";
+import { useGetPokemonDetails } from "@/hooks/pokemon/useGetPokemonDetails";
 
 interface PokemonMovesProps {
-  moves: PokemonDetails["moves"];
+  name: string;
 }
 
 function MoveItem({ number, move }: { number: number; move: string }) {
@@ -28,10 +28,11 @@ function MoveItem({ number, move }: { number: number; move: string }) {
   );
 }
 
-export default function PokemonMoves({ moves }: PokemonMovesProps) {
+export default function PokemonMoves({ name }: PokemonMovesProps) {
+  const { data: pokemonDetails } = useGetPokemonDetails({ name });
   return (
     <div className="grid grid-cols-2 gap-3">
-      {moves.map((move, index) => (
+      {pokemonDetails.moves.map((move, index) => (
         <MoveItem key={move} move={move} number={index + 1} />
       ))}
     </div>

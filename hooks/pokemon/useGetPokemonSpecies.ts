@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
+import type { Species } from "@/types/Species";
 import { POKEMON_SPECIES } from "@/constants/queryKeys";
-import { getPokemonSpeciesByName } from "@/api/pokemon";
+import { getPokemonSpecies } from "@/api/species";
 
 interface UseGetPokemonSpeciesProps {
   name: string;
@@ -11,12 +12,12 @@ export function getPokemonSpeciesQueryKey(name: string) {
 }
 
 export function useGetPokemonSpecies({ name }: UseGetPokemonSpeciesProps) {
-  const { data, isLoading, error, ...rest } = useQuery({
+  const { data: pokemonSpecies, ...rest } = useQuery({
     queryKey: getPokemonSpeciesQueryKey(name),
     queryFn: async () => {
-      return await getPokemonSpeciesByName(name);
+      return await getPokemonSpecies(name);
     },
   });
 
-  return { data, isLoading, error, ...rest };
+  return { data: pokemonSpecies || ({} as Species), ...rest };
 }

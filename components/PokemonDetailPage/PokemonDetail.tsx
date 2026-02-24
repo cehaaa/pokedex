@@ -41,16 +41,8 @@ export default function PokemonDetail({ name, backRef }: PokemonDetailProps) {
   const backRoute = constructBackRoute(backRef, name);
 
   const { data: pokemon } = useGetPokemonDetails({ name });
-  const { data: pokemonSpecies } = useGetPokemonSpecies({ name });
-  const { data: pokemonAbilities } = useGetPokemonAbilities({ name });
 
-  const pokemonDetails: PokemonDetails = {
-    ...pokemon,
-    ...pokemonSpecies,
-    ...pokemonAbilities,
-  };
-
-  if (!pokemonDetails) {
+  if (!pokemon) {
     notFound();
   }
 
@@ -101,7 +93,7 @@ export default function PokemonDetail({ name, backRef }: PokemonDetailProps) {
           </section>
 
           <section>
-            <TabContent pokemonDetails={pokemonDetails} />
+            <TabContent name={name} />
           </section>
         </MobileContainer>
       </main>

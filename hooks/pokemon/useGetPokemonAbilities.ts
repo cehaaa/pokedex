@@ -1,22 +1,34 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { POKEMON_ABILITIES } from "@/constants/queryKeys";
-import { getPokemonAbilitiesByName } from "@/api/pokemon";
+import { PokemonAbility } from "@/types/Ability";
+import { getPokemonAbilitiesByName } from "@/api/ability";
 
 interface UseGetPokemonAbilitiesProps {
-  name: string;
+  abilities: string[];
 }
 
 export function getPokemonAbilitiesQueryKey(name: string) {
   return [POKEMON_ABILITIES, name];
 }
 
-export function useGetPokemonAbilities({ name }: UseGetPokemonAbilitiesProps) {
-  const { data, isLoading, error, ...rest } = useQuery({
-    queryKey: getPokemonAbilitiesQueryKey(name),
-    queryFn: async () => {
-      return await getPokemonAbilitiesByName(name);
-    },
-  });
+export function useGetPokemonAbilities({
+  abilities,
+}: UseGetPokemonAbilitiesProps) {
+  const queryClient = useQueryClient();
 
-  return { data, isLoading, error, ...rest };
+  for (const ability of abilities) {
+    queryClient.fetchQuery({
+      queryKey: getPokemonAbilitiesQueryKey(ability),
+      queryFn: () => getPokemonAbilitiesByName(ability),
+    });
+  }
+
+  const data = abilities.map(
+    (ability) =>
+      queryClient.getQueryData(
+        getPokemonAbilitiesQueryKey(ability)
+      ) as PokemonAbility
+  );
+
+  return { data };
 }

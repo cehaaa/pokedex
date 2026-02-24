@@ -1,10 +1,8 @@
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
-import {
-  getPokemonDetailsByName,
-  getPokemonSpeciesByName,
-  getPokemonAbilitiesByName,
-} from "@/api/pokemon";
+import { getPokemonDetails } from "@/api/pokemon";
+import { getPokemonSpecies } from "@/api/species";
+import { getPokemonAbilitiesByName } from "@/api/ability";
 import { createQueryClient } from "@/utils/createQueryClient";
 import { getPokemonDetailsQueryKey } from "@/hooks/pokemon/useGetPokemonDetails";
 import { getPokemonSpeciesQueryKey } from "@/hooks/pokemon/useGetPokemonSpecies";
@@ -23,28 +21,26 @@ export default async function Page({ params, searchParams }: PageProps) {
 
   const queryClient = createQueryClient();
 
-  const pokemonDetails = queryClient.prefetchQuery({
+  const pokemonDetails = queryClient.fetchQuery({
     queryKey: getPokemonDetailsQueryKey(name),
-    queryFn: async () => {
-      return await getPokemonDetailsByName(name);
-    },
+    queryFn: async () => await getPokemonDetails(name),
   });
 
-  const pokemonSpecies = queryClient.prefetchQuery({
+  const pokemonSpecies = queryClient.fetchQuery({
     queryKey: getPokemonSpeciesQueryKey(name),
-    queryFn: async () => {
-      return await getPokemonSpeciesByName(name);
-    },
+    queryFn: async () => await getPokemonSpecies(name),
   });
 
-  await Promise.allSettled([pokemonDetails, pokemonSpecies]);
+  const [details] = await Promise.all([pokemonDetails, pokemonSpecies]);
 
-  // await queryClient.prefetchQuery({
-  //   queryKey: getPokemonAbilitiesQueryKey(name),
-  //   queryFn: async () => {
-  //     return await getPokemonAbilitiesByName(name);
-  //   },
-  // });
+  await Promise.all(
+    details.abilities.map((ability) =>
+      queryClient.fetchQuery({
+        queryKey: getPokemonAbilitiesQueryKey(ability),
+        queryFn: () => getPokemonAbilitiesByName(ability),
+      })
+    )
+  );
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

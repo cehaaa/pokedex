@@ -1,4 +1,6 @@
-import type { Pokemon, PokemonSpecies, PokemonAbility } from "@/types/Pokemon";
+import type { Pokemon } from "@/types/Pokemon";
+import type { Ability } from "@/types/Ability";
+import type { Species } from "@/types/Species";
 
 import { get } from "@/lib/get";
 import map from "lodash/map";
@@ -10,7 +12,7 @@ function getEnglishEntryOnly(entries: any[]) {
   return find(entries, (entry) => get(entry, "language.name", "") === "en");
 }
 
-export function normalizePokemonSpeciesResponse(species: any): PokemonSpecies {
+export function normalizePokemonSpeciesResponse(species: any): Species {
   const descriptions = get(species, "flavorTextEntries", []);
   const description = getEnglishEntryOnly(descriptions);
 
@@ -24,14 +26,22 @@ export function normalizePokemonSpeciesResponse(species: any): PokemonSpecies {
   };
 }
 
-export function normalizePokemonAbilitiesResponse(
-  abilities: any
-): PokemonAbility[] {
-  return map(abilities, (ability) => ({
-    name: get(ability, "ability.name", ""),
-    description: get(ability, "ability.description", ""),
-    effect: get(ability, "ability.effect", ""),
-  }));
+export function normalizePokemonAbilityResponse(ability: any): Ability {
+  const names = get(ability, "names", []);
+  const name = getEnglishEntryOnly(names);
+
+  const descriptions = get(ability, "flavorTextEntries", []);
+  const description = getEnglishEntryOnly(descriptions);
+
+  const effects = get(ability, "effectEntries", []);
+  const effect = getEnglishEntryOnly(effects);
+
+  return {
+    slug: get(ability, "name"),
+    name: get(name, "name", ""),
+    description: get(description, "flavorText", ""),
+    effect: get(effect, "effect", ""),
+  };
 }
 
 export function normalizePokemonResponse(pokemon: any): Pokemon {

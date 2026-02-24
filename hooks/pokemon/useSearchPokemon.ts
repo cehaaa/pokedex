@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { useDebounce } from "../useDebounce";
-import { getPokemonDetailsByName } from "@/api/pokemon";
+import { getPokemonDetails } from "@/api/pokemon";
 import { get } from "@/lib/get";
 import { isAxiosError } from "@/lib/http";
 import { toSlug } from "@/utils/toSlug";
@@ -40,7 +40,7 @@ export function useSearchPokemon({ name }: UseSearchPokemonProps) {
       const pokemonName = toSlug(debouncedName);
 
       try {
-        const response = await getPokemonDetailsByName(pokemonName);
+        const response = await getPokemonDetails(pokemonName);
         return response;
       } catch (error) {
         const status = get(error, "response.status");
