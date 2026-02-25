@@ -21,7 +21,7 @@ function AbilityEffect({ ability }: AbilityEffectProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const isLongText = useMemo(
-    () => ability.effect.length > 100,
+    () => ability.effect.length > 200,
     [ability.effect]
   );
 
