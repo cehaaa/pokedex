@@ -1,6 +1,7 @@
 import type { Pokemon } from "@/types/Pokemon";
 import type { Ability } from "@/types/Ability";
 import type { Species } from "@/types/Species";
+import type { EvolutionChain } from "@/types/EvolutionChain";
 
 import { get } from "@/lib/get";
 import map from "lodash/map";
@@ -51,6 +52,26 @@ export function normalizePokemonAbilityResponse(ability: any): Ability {
     name: get(name, "name", ""),
     effect: get(effect, "effect", ""),
   };
+}
+
+function getEvolutionChain(chain: any, species: string[]): string[] {
+  const currentSpecies = get(chain, "species.name", "");
+  const evolvesTo = get(chain, "evolvesTo", []);
+
+  if (evolvesTo.length === 0) {
+    return [...species, currentSpecies];
+  }
+
+  return getEvolutionChain(evolvesTo[0], [...species, currentSpecies]);
+}
+
+export function normalizePokemonEvolutionChainResponse(
+  evolutionChain: any
+): EvolutionChain {
+  const chain = get(evolutionChain, "chain", {});
+  const species = getEvolutionChain(chain, []);
+
+  return species;
 }
 
 export function normalizePokemonResponse(pokemon: any): Pokemon {
