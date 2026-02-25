@@ -7,6 +7,7 @@ import { Tab } from "@/constants/pokemonDetailTabs";
 import PokemonAbout from "./PokemonAbout";
 import PokemonAbilities from "./PokemonAbilities";
 import PokemonMoves from "./PokemonMoves";
+import PokemonEvolutions from "./PokemonEvolutions";
 
 interface TabContentProps {
   name: string;
@@ -18,7 +19,7 @@ const CONTENT_MAP: ContentMap = {
   [Tab.ABOUT]: PokemonAbout,
   [Tab.ABILITIES]: PokemonAbilities,
   [Tab.MOVES]: PokemonMoves,
-  [Tab.EVOLUTIONS]: () => <div>Evolutions</div>,
+  [Tab.EVOLUTIONS]: PokemonEvolutions,
 };
 
 export default function TabContent({ name }: TabContentProps) {

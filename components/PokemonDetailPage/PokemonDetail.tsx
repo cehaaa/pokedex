@@ -2,18 +2,14 @@
 
 import { notFound } from "next/navigation";
 
-import type { PokemonDetails } from "@/types/Pokemon";
-
 import { getBackRoute } from "@/utils/getBackRoute";
 import { formatPokemonOder } from "@/utils/formatPokemonOrder";
 import { getPokemonImage } from "@/utils/getPokemonImage";
 
 import { useGetPokemonDetails } from "@/hooks/pokemon/useGetPokemonDetails";
-import { useGetPokemonSpecies } from "@/hooks/pokemon/useGetPokemonSpecies";
-import { useGetPokemonAbilities } from "@/hooks/pokemon/useGetPokemonAbilities";
 
 import Image from "next/image";
-import { PlayIcon } from "@heroicons/react/16/solid";
+import { HeartIcon } from "@heroicons/react/16/solid";
 import Button from "@/components/ui/Button";
 import AppBar from "@/components/layout/AppBar";
 import PokemonType from "@/components/PokemonDetailPage/PokemonType";
@@ -74,7 +70,7 @@ export default function PokemonDetail({ name, backRef }: PokemonDetailProps) {
             </div>
             <div className="absolute -bottom-2 -right-2">
               <Button className="rounded-full flex items-center justify-center p-0 size-8">
-                <PlayIcon className="size-4" />
+                <HeartIcon className="size-4" />
               </Button>
             </div>
           </section>

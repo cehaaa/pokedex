@@ -1,6 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { POKEMON_ABILITIES } from "@/constants/queryKeys";
-import { PokemonAbility } from "@/types/Ability";
+import { Ability } from "@/types/Ability";
 import { getPokemonAbilitiesByName } from "@/api/ability";
 
 interface UseGetPokemonAbilitiesProps {
@@ -25,9 +25,7 @@ export function useGetPokemonAbilities({
 
   const data = abilities.map(
     (ability) =>
-      queryClient.getQueryData(
-        getPokemonAbilitiesQueryKey(ability)
-      ) as PokemonAbility
+      queryClient.getQueryData(getPokemonAbilitiesQueryKey(ability)) as Ability
   );
 
   return { data };
