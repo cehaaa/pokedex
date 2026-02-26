@@ -9,9 +9,10 @@ interface PokemonEvolutionsProps {
 }
 interface PokemonEvolutionProps {
   name: string;
+  counter: number;
 }
 
-function PokemonEvolution({ name }: PokemonEvolutionProps) {
+function PokemonEvolution({ name, counter }: PokemonEvolutionProps) {
   const { data: pokemonDetails } = useGetPokemonDetails({ name });
 
   return (
@@ -22,6 +23,9 @@ function PokemonEvolution({ name }: PokemonEvolutionProps) {
         "last:after:hidden"
       )}
     >
+      <div className="absolute -left-4 -top-4 size-8 rounded-full bg-gray-900 text-white flex items-center justify-center z-5">
+        {counter}
+      </div>
       <PokemonCard pokemon={pokemonDetails} reference="" />
     </div>
   );
@@ -35,8 +39,8 @@ export default function PokemonEvolutions({ name }: PokemonEvolutionsProps) {
 
   return (
     <div className="space-y-12">
-      {evolutionChain.map((species) => (
-        <PokemonEvolution key={species} name={species} />
+      {evolutionChain.map((species, counter) => (
+        <PokemonEvolution key={species} name={species} counter={counter + 1} />
       ))}
     </div>
   );
