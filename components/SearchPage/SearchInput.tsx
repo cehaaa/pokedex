@@ -16,7 +16,7 @@ export default function SearchInput() {
   const handleSearch = (value: string) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("name", value);
-    router.push(`/search?${params.toString()}`);
+    router.replace(`/search?${params.toString()}`);
   };
 
   const { isLoading } = useSearchPokemon({ name });
