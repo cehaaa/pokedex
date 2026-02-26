@@ -28,12 +28,5 @@ export default function TabContent({ name }: TabContentProps) {
 
   const Component = CONTENT_MAP[activeTab || Tab.ABOUT];
 
-  return (
-    <>
-      <h2 className="text-lg font-bold tracking-wider uppercase mb-2">
-        {activeTab}
-      </h2>
-      <Component name={name} />
-    </>
-  );
+  return <Component name={name} />;
 }
