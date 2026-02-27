@@ -38,7 +38,7 @@ export default function PokemonEvolutions({ name }: PokemonEvolutionsProps) {
   );
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-12 pt-4">
       {evolutionChain.map((species, counter) => (
         <PokemonEvolution key={species} name={species} counter={counter + 1} />
       ))}
