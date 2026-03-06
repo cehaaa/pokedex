@@ -1,23 +1,15 @@
 "use client";
 
 import { useMemo, useState } from "react";
-
 import type { Ability } from "@/types/Ability";
-
 import { cn } from "@/lib/cn";
-import { useGetPokemonDetails } from "@/hooks/pokemon/useGetPokemonDetails";
-import { useGetPokemonAbilities } from "@/hooks/pokemon/useGetPokemonAbilities";
+import InfoCard from "@/components/ui/InfoCard";
 
-import InfoCard from "../ui/InfoCard";
-
-interface PokemonAbilitiesProps {
-  name: string;
-}
 interface AbilityEffectProps {
   ability: Ability;
 }
 
-function AbilityEffect({ ability }: AbilityEffectProps) {
+export default function AbilityEffect({ ability }: AbilityEffectProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const isLongText = useMemo(
@@ -48,20 +40,5 @@ function AbilityEffect({ ability }: AbilityEffectProps) {
         </button>
       )}
     </InfoCard>
-  );
-}
-
-export default function PokemonAbilities({ name }: PokemonAbilitiesProps) {
-  const { data: pokemonDetails } = useGetPokemonDetails({ name });
-  const { data: abilities } = useGetPokemonAbilities({
-    abilities: pokemonDetails.abilities,
-  });
-
-  return (
-    <div className="grid gap-3">
-      {abilities.map((ability) => (
-        <AbilityEffect key={ability.slug} ability={ability} />
-      ))}
-    </div>
   );
 }

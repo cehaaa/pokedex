@@ -10,7 +10,7 @@ export function getPokemonEvolutionsQueryKey(id: number) {
 export function useGetPokemonEvolutions(id: number) {
   const { data: evolutionChain, ...rest } = useQuery({
     queryKey: getPokemonEvolutionsQueryKey(id),
-    queryFn: () => getEvolutionChain(id),
+    queryFn: async () => await getEvolutionChain(id),
   });
 
   return { data: evolutionChain || ([] as EvolutionChain), ...rest };

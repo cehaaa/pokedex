@@ -14,10 +14,7 @@ export function getPokemonDetailsQueryKey(name: string) {
 export function useGetPokemonDetails({ name }: UseGetPokemonDetailsProps) {
   const { data: pokemonDetails, ...rest } = useQuery({
     queryKey: getPokemonDetailsQueryKey(name),
-    queryFn: async () => {
-      const response = await getPokemonDetails(name);
-      return response;
-    },
+    queryFn: async () => await getPokemonDetails(name),
   });
 
   return { data: pokemonDetails || ({} as PokemonDetails), ...rest };

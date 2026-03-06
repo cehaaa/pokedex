@@ -1,15 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-	experimental: { scrollRestoration: true },
-	images: {
-		remotePatterns: [
-			{
-				protocol: "https",
-				hostname: "raw.githubusercontent.com",
-			},
-		],
-	},
+  experimental: { scrollRestoration: true },
+  images: {
+    remotePatterns: [
+      { protocol: "https", hostname: "raw.githubusercontent.com" },
+      { protocol: "https", hostname: "play.pokemonshowdown.com" },
+    ],
+  },
 };
 
 export default nextConfig;

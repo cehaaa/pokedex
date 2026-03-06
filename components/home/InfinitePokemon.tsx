@@ -6,7 +6,7 @@ import { useGetInfinitePokemon } from "@/hooks/pokemon/useGetInfinitePokemon";
 
 import PokemonGrid from "@/components/layout/PokemonGrid";
 import PokemonCard from "@/components/home/PokemonCard";
-import SkeletonGroup from "@/components/home/SkeletonGroup";
+import { PokemonSkeletonGroup } from "@/components/home/PokemonSkeletonGroup";
 import InfiniteScroll from "@/components/common/InfiniteScroll";
 
 export default function InfinitePokemon() {
@@ -29,7 +29,7 @@ export default function InfinitePokemon() {
       ref={infiniteScrollRef}
       isLoading={isLoading || isFetchingNextPage}
       onIntersect={handleOnIntersect}
-      renderLoader={() => <SkeletonGroup length={10} />}
+      renderLoader={() => <PokemonSkeletonGroup />}
     >
       <PokemonGrid>
         {pokemon.map((pokemon) => (

@@ -14,9 +14,7 @@ export function getPokemonSpeciesQueryKey(name: string) {
 export function useGetPokemonSpecies({ name }: UseGetPokemonSpeciesProps) {
   const { data: pokemonSpecies, ...rest } = useQuery({
     queryKey: getPokemonSpeciesQueryKey(name),
-    queryFn: async () => {
-      return await getPokemonSpecies(name);
-    },
+    queryFn: async () => await getPokemonSpecies(name),
   });
 
   return { data: pokemonSpecies || ({} as Species), ...rest };

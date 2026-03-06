@@ -9,8 +9,6 @@ import { getPokemonImage } from "@/utils/getPokemonImage";
 import { useGetPokemonDetails } from "@/hooks/pokemon/useGetPokemonDetails";
 
 import Image from "next/image";
-import { HeartIcon } from "@heroicons/react/16/solid";
-import Button from "@/components/ui/Button";
 import AppBar from "@/components/layout/AppBar";
 import PokemonType from "@/components/PokemonDetailPage/PokemonType";
 import Tabs from "@/components/PokemonDetailPage/Tabs";
@@ -39,7 +37,7 @@ export default function PokemonDetail({ name, backRef }: PokemonDetailProps) {
   const { data: pokemon } = useGetPokemonDetails({ name });
 
   if (!pokemon) {
-    notFound();
+    return notFound();
   }
 
   return (
@@ -58,20 +56,26 @@ export default function PokemonDetail({ name, backRef }: PokemonDetailProps) {
 
       <main>
         <MobileContainer className="pt-5" withMinHeight>
-          <section className="relative mb-5 bg-zinc-200/50">
-            <div className="relative aspect-square w-[200px] mx-auto z-20">
-              <Image
-                src={getPokemonImage({ image: pokemon.sprites })}
-                alt={pokemon.name}
-                width={1080}
-                height={1080}
-                loading="eager"
-              />
-            </div>
-            <div className="absolute -bottom-2 -right-2">
-              <Button className="rounded-full flex items-center justify-center p-0 size-8">
-                <HeartIcon className="size-4" />
-              </Button>
+          <section className="mb-5 group">
+            <div className="relative bg-zinc-200/50 mb-1">
+              <div className="aspect-square w-[200px] mx-auto z-20 group ">
+                <Image
+                  src={getPokemonImage({ image: pokemon.sprites })}
+                  alt={pokemon.name}
+                  width={1080}
+                  height={1080}
+                  loading="eager"
+                  className="group-hover:hidden"
+                />
+                <Image
+                  src={`https://play.pokemonshowdown.com/sprites/ani/${pokemon.slug}.gif`}
+                  alt={pokemon.name}
+                  width={1080}
+                  height={1080}
+                  loading="eager"
+                  className="absolute inset-0 size-[180px] object-contain mx-auto hidden group-hover:block"
+                />
+              </div>
             </div>
           </section>
 
