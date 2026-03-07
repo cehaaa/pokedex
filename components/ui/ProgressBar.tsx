@@ -40,7 +40,7 @@ export function Bar({ value, className }: BarProps) {
   return (
     <div className={cn("w-full h-2 bg-zinc-200 rounded-full", className)}>
       <div
-        className="h-full bg-red-700 rounded-full group-hover:ring ring-offset-2 ring-red-700 transition-all duration-200"
+        className="h-full bg-red-700 rounded-full group-hover/stat:ring ring-offset-2 ring-red-700 transition-all duration-200"
         style={{ width: `${percentage}%` }}
       ></div>
     </div>

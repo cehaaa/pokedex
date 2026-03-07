@@ -12,8 +12,8 @@ interface StatItemProps {
 
 function StatItem({ name, baseStat }: StatItemProps) {
   return (
-    <div className="flex gap-5 items-center group cursor-pointer">
-      <div className="text-zinc-400 min-w-13 group-hover:text-zinc-900 transition-all duration-200">
+    <div className="flex gap-5 items-center group/stat cursor-pointer">
+      <div className="text-zinc-400 min-w-13 group-hover/stat:text-zinc-900 transition-all duration-200">
         {getPokemonStatName(name)}
       </div>
       <div className="font-medium min-w-8 text-center">{baseStat}</div>
