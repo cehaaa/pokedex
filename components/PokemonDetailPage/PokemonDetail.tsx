@@ -56,26 +56,16 @@ export default function PokemonDetail({ name, backRef }: PokemonDetailProps) {
 
       <main>
         <MobileContainer className="pt-5" withMinHeight>
-          <section className="mb-5 group">
+          <section className="mb-5">
             <div className="relative bg-zinc-200/50 mb-1">
-              <div className="aspect-square w-[200px] mx-auto z-20 group ">
-                <Image
-                  src={getPokemonImage({ image: pokemon.sprites })}
-                  alt={pokemon.name}
-                  width={1080}
-                  height={1080}
-                  loading="eager"
-                  className="group-hover:hidden"
-                />
-                <Image
-                  src={`https://play.pokemonshowdown.com/sprites/ani/${pokemon.slug}.gif`}
-                  alt={pokemon.name}
-                  width={1080}
-                  height={1080}
-                  loading="eager"
-                  className="absolute inset-0 size-[180px] object-contain mx-auto hidden group-hover:block"
-                />
-              </div>
+              <Image
+                src={getPokemonImage({ image: pokemon.sprites })}
+                alt={pokemon.name}
+                width={1080}
+                height={1080}
+                loading="eager"
+                className="aspect-square w-[200px] mx-auto z-20"
+              />
             </div>
           </section>
 
